@@ -1,28 +1,18 @@
 #!/bin/bash
 DIR="/home/brayan-cortes/Imágenes/fondos de pantalla"
-LOG="/home/brayan-cortes/Imágenes/scripts_fondo/engine.log"
-TEMAS=("black clover" "supercars" "samurai" "cyberpunk" "linux")
-
+TEMAS=("black clover anime" "toyota supra anime" "nissan gtr art" "samurai anime")
 while true; do
     TEMA=${TEMAS[$RANDOM % ${#TEMAS[@]}]}
-    echo "$(date): DL START $TEMA" >> "$LOG"
-    
     LINKS=$(python3 -c "import urllib.request, json, sys; 
-req = urllib.request.Request(f'https://wallhaven.cc/api/v1/search?q={sys.argv[1]}&categories=111&purity=100&sorting=random', headers={'User-Agent': 'Mozilla/5.0'});
+req = urllib.request.Request(f'https://wallhaven.cc/api/v1/search?q={sys.argv[1]}&categories=010&purity=100&sorting=random', headers={'User-Agent': 'Mozilla/5.0'});
 try:
-    with urllib.request.urlopen(req, timeout=10) as resp:
+    with urllib.request.urlopen(req) as resp:
         data = json.loads(resp.read());
-        for x in data['data'][:3]: print(x['path'])
+        for x in data['data'][:5]: print(x['path'])
 except: pass" "$TEMA")
-
-    if [ -n "$LINKS" ]; then
-        for URL in $LINKS; do
-            wget -q -T 10 -t 1 "$URL" -P "$DIR/"
-        done
-    fi
-    
-    ls -t "$DIR"/*.{jpg,jpeg,png} 2>/dev/null | tail -n +21 | xargs -I {} rm "{}" 2>/dev/null
-    
-    # Wait 30s between downloads
-    sleep 30
+    for URL in $LINKS; do
+        wget -q "$URL" -P "$DIR/"
+    done
+    ls -t "$DIR" | tail -n +21 | xargs -I {} rm "$DIR/{}" 2>/dev/null
+    sleep 600
 done

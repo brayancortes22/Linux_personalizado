@@ -19,6 +19,6 @@ while true; do
             /usr/bin/gsettings set org.gnome.desktop.background picture-options 'zoom'
             echo "$(date): SET $(basename "$IMG")" >> "$LOG"
         fi
-        sleep 10
+        sleep 60
     done
 done
