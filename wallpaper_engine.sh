@@ -43,11 +43,11 @@ while true; do
         echo "$(date): [ROTATE] $(basename "$IMG")" >> "$LOG"
     fi
 
-    # Every 5 rotations (10 min), download
+    # Every 20 rotations (10 min), download
     ((COUNT++))
-    if [ $((COUNT % 5)) -eq 0 ]; then
+    if [ $((COUNT % 20)) -eq 0 ]; then
         download &
     fi
 
-    sleep 120
+    sleep 30
 done
